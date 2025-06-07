@@ -4,8 +4,11 @@ import 'package:imc_calculadora/core/text_styles.dart';
 
 class NumberSelector extends StatefulWidget {
   final String title;
+  final int value;
+  final Function() onIncrement;
 
-  const NumberSelector({super.key, required this.title});
+  const NumberSelector(
+    {super.key, required this.title, required this.value, required this.onIncrement});
 
   @override
   State<NumberSelector> createState() => _NumberSelectorState();
@@ -24,7 +27,14 @@ class _NumberSelectorState extends State<NumberSelector> {
         child: Column(
           children: [
             Text(widget.title, style: TextStyles.bodyStyle),
-            Text(""),
+            Text(
+              widget.value.toString(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -36,7 +46,9 @@ class _NumberSelectorState extends State<NumberSelector> {
                 ),
                 SizedBox(width: 16,),
                 FloatingActionButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    widget.onIncrement();
+                  },
                   shape: CircleBorder(),
                   backgroundColor: AppColors.primary,
                   child: Icon(Icons.add ,color: Colors.white),

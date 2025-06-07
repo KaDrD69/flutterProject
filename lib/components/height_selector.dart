@@ -23,7 +23,10 @@ class _HeightSelectorState extends State<HeightSelector> {
         ),
         child: Column(
           children: [
-            Text("Altura", style: TextStyles.bodyStyle),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text("Altura", style: TextStyles.bodyStyle),
+            ),
             Text(
               "${height.toStringAsFixed(0)} cm",
               style: TextStyle(
