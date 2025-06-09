@@ -15,13 +15,19 @@ class ImcHomeScreen extends StatefulWidget {
 class _ImcHomeScreenState extends State<ImcHomeScreen> {
   int selectedAge = 20;
   int selectedWeight = 80;
+  double selectedHeight = 170;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GenderSelector(),
-        HeightSelector(),
+        HeightSelector(valor: selectedHeight, obtener:(n){
+          setState(() {
+            selectedHeight = n;
+          });
+
+        } ,),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(

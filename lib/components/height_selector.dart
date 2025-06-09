@@ -3,7 +3,9 @@ import 'package:imc_calculadora/core/app_colors.dart';
 import 'package:imc_calculadora/core/text_styles.dart';
 
 class HeightSelector extends StatefulWidget {
-  const HeightSelector({super.key});
+  final double valor;
+  final Function(double) obtener;
+  const HeightSelector({super.key, required this.valor, required this.obtener});
 
   @override
   State<HeightSelector> createState() => _HeightSelectorState();
@@ -28,7 +30,7 @@ class _HeightSelectorState extends State<HeightSelector> {
               child: Text("Altura", style: TextStyles.bodyStyle),
             ),
             Text(
-              "${height.toStringAsFixed(0)} cm",
+              "${widget.valor.toStringAsFixed(0)} cm",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 37,
@@ -36,16 +38,16 @@ class _HeightSelectorState extends State<HeightSelector> {
               ),
             ),
             Slider(
-                value: height,
+                value: widget.valor,
                 onChanged: (newHeight){
                   setState(() {
-                    height = newHeight;
+                    widget.obtener(newHeight);
                   });
                 }, 
                 min: 150,
                 max: 220,
                 divisions: 70,
-                label: "${height.toStringAsFixed(0)} cm",
+                label: "${widget.valor.toStringAsFixed(0)} cm",
                 activeColor: AppColors.primary,
         
             )
