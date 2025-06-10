@@ -11,14 +11,16 @@ class ImcResultSreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double heightMet = height/100;
     double imcResult = weight/((heightMet)*(heightMet));
+    Map<String, dynamic> valueImc = getColorState(imcResult);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: toolbarResult(),
-      body: bodyResult(imcResult),
+      body: bodyResult(imcResult, valueImc, context),
     ); 
   }
 
-  Padding bodyResult(imcResult) {
+  Padding bodyResult(imcResult, valueImc, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -41,14 +43,21 @@ class ImcResultSreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("Sobrepeso", style: TextStyle(color: Colors.red),),
+                    Text(valueImc["imc"] as String,
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: valueImc["color"] as Color),
+                    ),
                     Text(imcResult.toStringAsFixed(2),
                     style: TextStyle(
-                      fontSize: 56,
+                      fontSize: 60,
                       color: Colors.white,
                       fontWeight: FontWeight.bold
                     )),
-                    Text("informacion de no se que", style: TextStyles.bodyStyle)
+                    Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Text(valueImc["des"] as String, style: TextStyles.bodyStyle2, textAlign: TextAlign.center,),
+                    )
                   ],
                 )
               ),
@@ -58,7 +67,9 @@ class ImcResultSreen extends StatelessWidget {
             height: 60,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pop(context);
+              },
               style: ButtonStyle(
                 shape: WidgetStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -79,5 +90,14 @@ class ImcResultSreen extends StatelessWidget {
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
     );
+  }
+  
+  getColorState(double resultIMC) {
+    return switch (resultIMC) {
+      < 18.5 => {"color": Colors.blue, "imc":"Bajo peso", "des":"Tienes que comer mas amiguito"},  
+      < 24.9 => {"color": Colors.green, "imc":"Normal", "des":"Estas en perfectas condiciones" },
+      < 29.99 =>{"color": Colors.orange, "imc":"Sobrepeso", "des":"Empieza a preocuparte estas algo gordito"},
+      _ => {"color": Colors.red, "imc":"Cerdo", "des":"Estas hecho mierda, eres un cerdo asqueroso"}, 
+    };
   }
 }
