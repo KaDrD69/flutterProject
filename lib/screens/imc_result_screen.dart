@@ -9,14 +9,16 @@ class ImcResultSreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double heightMet = height/100;
+    double imcResult = weight/((heightMet)*(heightMet));
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: toolbarResult(),
-      body: bodyResult(),
+      body: bodyResult(imcResult),
     ); 
   }
 
-  Padding bodyResult() {
+  Padding bodyResult(imcResult) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -29,19 +31,45 @@ class ImcResultSreen extends StatelessWidget {
           ),),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 32, bottom: 32, left: 16, right: 16),
+              padding: const EdgeInsets.only(top: 32, bottom: 32),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppColors.backgroundComponent,
                   borderRadius: BorderRadius.circular(16)
                 ),
-                child: Text("awe")
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Sobrepeso", style: TextStyle(color: Colors.red),),
+                    Text(imcResult.toStringAsFixed(2),
+                    style: TextStyle(
+                      fontSize: 56,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    )),
+                    Text("informacion de no se que", style: TextStyles.bodyStyle)
+                  ],
+                )
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 60,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: (){},
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                )),
+                backgroundColor: WidgetStateProperty.all(AppColors.primary),
+              ),
+              child: Text("Finalizar", style: TextStyles.bodyStyle)
+            ),
+          ) 
         ],
-      ),
+      ),      
     );
   }
 

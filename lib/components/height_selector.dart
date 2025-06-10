@@ -12,7 +12,6 @@ class HeightSelector extends StatefulWidget {
 }
 
 class _HeightSelectorState extends State<HeightSelector> {
-  double height = 170; //Altura inicial
   
   @override
   Widget build(BuildContext context) {
